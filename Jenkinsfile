@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Clone Terraform code') {
       steps {
-        git 'https://github.com/aru1235/Terraform_demo'
+        git 'https://github.com/aru1235/Terraform_demo.git'
       }
     }
     
