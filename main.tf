@@ -1,3 +1,16 @@
+# To store the "tf state" file remotely (to be specific in S3 bucket) to access it anyone, perform following
+# By performing below, tfstate file will be moved to the s3 bucket, so that organisation can access to it.
+# So, whenever we update this main.tf file here, tf state file will be updated in s3 bucket.
+terraform {             
+    required_version = ">= 0.12"      # Version of terraform
+    backend "s3" {
+        bucket = "myapp-bucket-9"   # To be created manually in console
+        key = "myapp/state.tfstate"
+        region = "us-east-1"
+    }
+}
+
+
 # Declaring an AWS provider named aws
 provider "aws" {
   # Declaring the provider region
@@ -97,7 +110,10 @@ resource "aws_instance" "myapp-server" {
                   sudo service docker start
                   sudo usermod -a -G docker ec2-user
                   sudo docker pull nginx:latest
-                  sudo docker run --name mynginx1 -p 8080:80 -d nginx    
+                  sudo docker pull jenkins/jenkins
+                  sudo docker run --name mynginx1 -p 8080:80 -d nginx
+                  sudo docker run --name jenkins -p 9090:80 -d jenkins
+           
                 EOF
 
     tags = {
@@ -121,5 +137,8 @@ resource "aws_key_pair" "ssh-key" {
 # type this in terminal, you will be logged in to instance
 # In addition, allow SSH, port 22 in security group in console to allow ssh
 # we can also manage security in configuration file of terraform
+# Jenkins is not working here due to some issues
+# afte running "docker ps". if it shows daemon error, then perform "sudo systemctl start docker"
+# To restart stopped container (docker ps -a), perform "docker start <container_name>"
 
 
