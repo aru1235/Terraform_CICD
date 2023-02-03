@@ -5,6 +5,8 @@ pipeline {
     stage("test AWS credentials") {
             steps {
                 withAWS(credentials: 'aws-test-user', region: 'us-east-1') 
+            }
+    }
     
     stage("Clone Terraform code") {
       steps {
