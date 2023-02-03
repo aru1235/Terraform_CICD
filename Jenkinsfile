@@ -7,6 +7,9 @@ pipeline {
                 withAWS(credentials: 'aws-test-user', region: 'us-east-1') 
             }
     }
+    withCredentials([gitUsernamePassword(credentialsId: 'my-git-id', gitToolName: 'git-tool')]) {
+  sh 'git fetch --all'
+}
     
     stage("Clone Terraform code") {
       steps {
