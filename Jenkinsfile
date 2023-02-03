@@ -2,9 +2,13 @@ pipeline {
   agent any
   
   stages {
+    stage('test AWS credentials') {
+            steps {
+                withAWS(credentials: 'aws-test-user', region: 'us-east-1') 
+    
     stage('Clone Terraform code') {
       steps {
-        git 'https://github.com/aru1235/Terraform_demo.git'
+        git 'https://github.com/aru1235/Terraform_CICD.git'
       }
     }
     
