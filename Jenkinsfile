@@ -4,7 +4,9 @@ pipeline {
   stages {
     stage("test AWS credentials") {
             steps {
-                withAWS(credentials: 'aws-test-user', region: 'us-east-1') 
+                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+    // some block
+}
             }
     }
     stage("test git credentials") {
